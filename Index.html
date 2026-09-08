@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCAA Football Squares</title>
+    <!-- Include Tailwind CSS or other styles as needed -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 1. Load the Firebase App SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body class="bg-slate-100 min-h-screen">
+
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold text-center mb-6">NCAA Football Squares</h1>
+        <!-- Your board and UI elements go here -->
+    </div>
+
+    <!-- 2. Load your local config file FIRST so firebaseConfig is defined -->
+    <script src="config.js"></script>
+
+    <!-- 3. Initialize Firebase and run your main application logic -->
+    <script>
+        // Initialize Firebase using the config object loaded from config.js
+        if (typeof firebaseConfig !== 'undefined') {
+            firebase.initializeApp(firebaseConfig);
+            const database = firebase.database();
+            console.log("Firebase initialized successfully!");
+        } else {
+            console.error("Firebase configuration not found! Make sure config.js exists.");
+        }
+    </script>
+
+    <!-- Your main application script logic -->
+    <script src="app.js"></script>
+</body>
+</html>
