@@ -947,11 +947,26 @@
  if (printBtn) printBtn.style.display = 'none';
  }
 
+ // Load local storage cache if available for offline/local persistence
+ const localSavedData = localStorage.getItem('ncaa_squares_' + boardId);
+ if (localSavedData) {
+ try {
+ const parsed = JSON.parse(localSavedData);
+ if (parsed) {
+ boardData = parsed;
+ updateUIFromState();
+ }
+ } catch (e) {
+ console.error("Error loading local storage data", e);
+ }
+ }
+
  db.ref('boards/' + boardId).on('value', (snapshot) => {
  const data = snapshot.val();
  if (data) {
  if (data.costPerSquare === undefined) data.costPerSquare = 1;
  boardData = data;
+ saveBoardToLocalStorage();
  updateUIFromState();
  } else {
  saveBoardToFirebase();
@@ -1003,7 +1018,14 @@
  }
  }
 
+ function saveBoardToLocalStorage() {
+ if (boardId) {
+ localStorage.setItem('ncaa_squares_' + boardId, JSON.stringify(boardData));
+ }
+ }
+
  function saveBoardToFirebase() {
+ saveBoardToLocalStorage();
  db.ref('boards/' + boardId).set(boardData);
  }
 
